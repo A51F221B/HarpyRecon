@@ -60,6 +60,9 @@ class PortScan:
     
     def OsfingerPrint():
         pass
+    
+    def test():
+        pass
         
         
 class Args:
