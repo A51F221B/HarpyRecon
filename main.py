@@ -41,17 +41,19 @@ class PortScan:
             c.print(e,style="bold red")
              
          
-    def scanner(self,ip,*ports):
+    def scanner(self,ip,ports):
         if self.ping(ip)==-1:
             return
+        ports=ports.split(',')
         try:
                 target = socket.gethostbyname(ip)
                 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
                 socket.setdefaulttimeout(1)
                 for port in ports:
-                        result=s.connect_ex((target,int(port)))
+                        num=int(port)
+                        result=s.connect_ex((target,num))
                         if result==0:
-                            c.print(f"[+] Port {port} open",style="bold green")
+                            c.print(f"[+] Port {port} open : {socket.getservbyport(num)}",style="bold green")
                         else:
                             c.print(f"[+] Port {port} closed",style="bold red")
         except socket.error:
