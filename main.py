@@ -102,8 +102,7 @@ def main():
     scanner.banner()
     scanner.scanner(argument.address,argument.port)
     #c.print("[!] Error in Scanning",style="bold red")
-        
-
+    # this is just a test
 
 if __name__=='__main__':
     main()
