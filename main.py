@@ -2,11 +2,13 @@ from logging import exception
 from os import execlpe
 import socket
 import argparse
+import string
 from typing import Optional
 import pyfiglet
 from rich import console,status
 from rich.console import group
 from rich.panel import Panel
+from scapy import *
 
 c=console.Console()
 
@@ -42,9 +44,11 @@ class PortScan:
              
          
     def scanner(self,ip,ports):
+        # ports in a list by default and string if provided by user
         if self.ping(ip)==-1:
             return
-        ports=ports.split(',')
+        if type(ports)==str: 
+            ports=ports.split(',')
         try:
                 target = socket.gethostbyname(ip)
                 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -62,17 +66,19 @@ class PortScan:
     
     def OsfingerPrint():
         pass
-
         
+
 class Args:
     def __init__(self):
         description=c.print("Harpy - A Simple Port Scanner",style="bold red")
         self.parser=argparse.ArgumentParser(description=description)
         #self.parser.add_argument("--port","-p",dest="ports",default="1-65535",help="Defined Port range")
+        
         self.parser.add_argument('-p',
                        '--port',
                        type=str,
-                       required=True,
+                       default=[x for x in range(1,1000)],
+                       #required=True,
                        help='The specific port you want to scan')
         
         self.parser.add_argument('-ip',
